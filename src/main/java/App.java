@@ -54,7 +54,7 @@ public class App {
                 }
                 JOptionPane.showMessageDialog(null, String.format("Конвертировано %s файлов", files.length));
             } else {
-                throw new Exception("Директория не выбранна");
+                throw new Exception("Файлы не выбранна");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
