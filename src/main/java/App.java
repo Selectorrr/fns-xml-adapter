@@ -1,3 +1,5 @@
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -45,12 +47,11 @@ public class App {
                     Transformer transformer = transformerFactory.newTransformer();
                     transformer.setOutputProperty(OutputKeys.ENCODING, "windows-1251");
                     DOMSource source = new DOMSource(document);
-
-                    if (f.renameTo(new File(f.getPath() + "/" + fileName + ".xml"))) {
-                        FileOutputStream stream = new FileOutputStream(f);
-                        StreamResult result = new StreamResult(stream);
-                        transformer.transform(source, result);
-                    }
+                    File destFile = new File(FilenameUtils.getFullPath(f.getPath()) + "/" + fileName + ".xml");
+                    FileUtils.moveFile(f, destFile);
+                    FileOutputStream stream = new FileOutputStream(destFile);
+                    StreamResult result = new StreamResult(stream);
+                    transformer.transform(source, result);
                 }
                 JOptionPane.showMessageDialog(null, String.format("Конвертировано %s файлов", files.length));
             } else {
